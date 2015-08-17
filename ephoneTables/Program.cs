@@ -33,6 +33,7 @@ namespace ephoneTables
 
             FtpWebResponse responseDate;
             FtpWebRequest requestDate;
+
             string[] lines = reader.ReadToEnd().Split('\r');
 
             string[] replacement = new string[lines.Count()];
