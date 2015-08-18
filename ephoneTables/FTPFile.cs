@@ -1,13 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.Threading;
 
 namespace ephoneTables
 {
@@ -18,7 +10,17 @@ namespace ephoneTables
             get;
             private set;
         }
+        public string router_name
+        {
+            get;
+            private set;
+        }
         public DateTime modificationDate
+        {
+            get;
+            private set;
+        }
+        public string[] configRaw
         {
             get;
             private set;
@@ -33,6 +35,12 @@ namespace ephoneTables
             FtpWebResponse responseDate = (FtpWebResponse)requestDate.GetResponse();
                         
             modificationDate = responseDate.LastModified;
+            //router_name = filename.Remove()
+        }
+
+        public void DownloadConfiguration()
+        {
+            // pociagniecie configa
         }
     }
 }

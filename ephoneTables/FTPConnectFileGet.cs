@@ -31,5 +31,20 @@ namespace ephoneTables
                 
             }
         }
+
+        public IEnumerable<FTPFile> get_fresh_files()
+        {
+            List<FTPFile> resultList = new List<FTPFile>();
+
+            IEnumerable<string> routers = this.Select(x => x.router_name).Distinct();
+            foreach (string unique_router_name in routers)
+            {
+                FTPFile latestFile = this.Where(x => x.router_name == unique_router_name).OrderByDescending(x => x.modificationDate).First();
+                latestFile.DownloadConfiguration();
+                resultList.Add(latestFile);
+            }
+
+            return resultList;
+        }
     }
 }

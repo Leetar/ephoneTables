@@ -22,7 +22,33 @@ namespace ephoneTables
             stopWatch.Start();
             
             FTPConnectFileGet getTheFile = new FTPConnectFileGet("ftp://172.17.56.20/CISCO/");
-            DateTime latestFile = getTheFile.Max(sdffdsx => sdffdsx.modificationDate);
+            foreach (FTPFile file in getTheFile.get_fresh_files())
+            {
+                file.configRaw
+            }
+
+            //CiscoConfigSection:
+            //Dictionary<string, string>
+
+            Dictionary<string, Dictionary<string, string>> ephone;
+            Dictionary<string, Dictionary<string, string>> ephonedn;
+
+            foreach (string ephone_number in ephone.Keys)
+            {
+                if (!ephone[ephone_number].ContainsKey("name"))
+                {
+                    
+                }
+                    
+
+                try
+                {
+                    ephone[ephone_number]["name"];
+                }
+                catch (key`)
+            }
+             
+
 
             Console.WriteLine(latestFile);
 
