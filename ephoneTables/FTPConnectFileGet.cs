@@ -11,42 +11,25 @@ using System.Threading;
 
 namespace ephoneTables
 {
-    public class FTPConnectFileGet
+    public class FTPConnectFileGet : List<FTPFile>
     {
-        public FtpWebResponse response
-        {
-            get;
-            set;
-        }
-        public FtpWebRequest request
-        {
-            get;
-            set;
-        }
-        public List<string> fileLinesList
-        {
-            get;
-            private set;
-        }
         
-        public List<string> FTPConnect(string serverUri)
+        public FTPConnectFileGet(string serverUri)
         {
             ConnectToFTPgetReader getReader = new ConnectToFTPgetReader();
             string[] lines = getReader.getReaderMet(serverUri).ReadToEnd().Split('\n');
             
-            fileLinesList = new List<string>();
-
             foreach (string line in lines)
             {
-                if (line == "") { break; }
-                fileLinesList.Add(Regex.Replace(line, @"\t|\n|\r", ""));
+                if (line == "")
+                {
+                    break;
+                }
+
+                string filename = Regex.Replace(line, @"\t|\n|\r", "");
+                this.Add(new FTPFile(serverUri, filename));
                 
             }
-            return fileLinesList;
-            //ModificationDate modDate = new ModificationDate();
-            //modDate.dateModified(serverUri);
-            
-            
         }
     }
 }

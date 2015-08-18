@@ -21,24 +21,32 @@ namespace ephoneTables
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             
-            FTPConnectFileGet getTheFile = new FTPConnectFileGet();
-            List<string> filesList = new List<string>(getTheFile.FTPConnect("ftp://172.17.56.20/CISCO/"));
+            FTPConnectFileGet getTheFile = new FTPConnectFileGet("ftp://172.17.56.20/CISCO/");
+            DateTime latestFile = getTheFile.Max(sdffdsx => sdffdsx.modificationDate);
 
-            ModificationDate modDate = new ModificationDate();
-            List<DateTime> listOfDates = new List<DateTime>(modDate.dateModified("ftp://172.17.56.20/CISCO/", filesList));
-
+            Console.WriteLine(latestFile);
 
 
-            int j = 0;
-            List<DateTime> listDateTime = new List<DateTime>();                    
+
+
+
+            //List<string> filesList = new List<string>(getTheFile.FTPConnect());
+
+            //FTPFile modDate = new FTPFile();
+            //List<DateTime> listOfDates = new List<DateTime>(modDate.dateModified("ftp://172.17.56.20/CISCO/", filesList));
+
+
+
+            //int j = 0;
+            //List<DateTime> listDateTime = new List<DateTime>();                    
 
             
 
-            int dateIndex = 0;
-            dateIndex = listOfDates.IndexOf(listDateTime.Max());
+            //int dateIndex = 0;
+            //dateIndex = listOfDates.IndexOf(listDateTime.Max());
 
             //bierze tresc pliku do streamreadera a potem przenosi do zmiennej typu string
-            WebClient client = new WebClient();
+            /*WebClient client = new WebClient();
             client.Credentials = new NetworkCredential("crawl", "qwerty123");
             //StreamReader reader2 = new StreamReader(client.OpenRead(serverUri + lines[dateIndex])); //tu bierze najnowszy plik
             StreamReader reader2 = new StreamReader(client.OpenRead(serverUri + "RTR_100_00_GNS-configAug--1-23-57-06.184-7")); //hardcode konkretnego pliku w celach debugu
