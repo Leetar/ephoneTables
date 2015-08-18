@@ -53,10 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddToSharepoint.cs" />
+    <Compile Include="ConnectToFTPgetReader.cs" />
     <Compile Include="FTPConnectFileGet.cs" />
     <Compile Include="ftpPlik.cs" />
     <Compile Include="ftpPliki.cs" />
     <Compile Include="GlobVar.cs" />
+    <Compile Include="ModificationDate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

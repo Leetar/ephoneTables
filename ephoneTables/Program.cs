@@ -20,48 +20,22 @@ namespace ephoneTables
             //czas wykonywania programu
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
+            
+            FTPConnectFileGet getTheFile = new FTPConnectFileGet();
+            List<string> filesList = new List<string>(getTheFile.FTPConnect("ftp://172.17.56.20/CISCO/"));
 
-            //Łączenie z serwerem i spisanie nazw plików do zmiennej typu string o nazwie lines
-            string serverUri = "ftp://172.17.56.20/CISCO/";
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
-            request.Method = WebRequestMethods.Ftp.ListDirectory;
-            request.Credentials = new NetworkCredential("crawl", "qwerty123");
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            ModificationDate modDate = new ModificationDate();
+            List<DateTime> listOfDates = new List<DateTime>(modDate.dateModified("ftp://172.17.56.20/CISCO/", filesList));
 
-            Stream responseStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
 
-            FtpWebResponse responseDate;
-            FtpWebRequest requestDate;
-
-            string[] lines = reader.ReadToEnd().Split('\r');
-
-            string[] replacement = new string[lines.Count()];
 
             int j = 0;
-            List<DateTime> listDateTime = new List<DateTime>();
+            List<DateTime> listDateTime = new List<DateTime>();                    
 
-            foreach (string element in lines) //kasowanie \n i \r ze zmiennej typu string o nazwie lines
-            {
-                replacement[j] = Regex.Replace(lines[j], @"\t|\n|\r", "");
-
-                lines[j] = replacement[j];
-                replacement[j] = null;
-                j++;
-            }
-
-            for (int i = 0; i < lines.Count() - 1; i++) //tu ma brac daty wszystkich plikow
-            {
-                requestDate = (FtpWebRequest)WebRequest.Create(serverUri + lines[i]);
-                requestDate.Method = WebRequestMethods.Ftp.GetDateTimestamp;
-                requestDate.Credentials = new NetworkCredential("crawl", "qwerty123");
-                responseDate = (FtpWebResponse)requestDate.GetResponse();
-
-                listDateTime.Add(responseDate.LastModified);
-            }
+            
 
             int dateIndex = 0;
-            dateIndex = listDateTime.IndexOf(listDateTime.Max());
+            dateIndex = listOfDates.IndexOf(listDateTime.Max());
 
             //bierze tresc pliku do streamreadera a potem przenosi do zmiennej typu string
             WebClient client = new WebClient();
@@ -79,7 +53,7 @@ namespace ephoneTables
                 //Console.WriteLine(listDateTime[i].ToString());
             }
 
-            searchThroughFile(fileContent);
+            searchThroughFile(fileContent);*/
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
