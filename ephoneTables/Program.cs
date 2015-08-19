@@ -20,11 +20,18 @@ namespace ephoneTables
             //czas wykonywania programu
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            
-            FTPConnectFileGet getTheFile = new FTPConnectFileGet("ftp://172.17.56.20/CISCO/");
-            foreach (FTPFile file in getTheFile.get_fresh_files())
+            GlobVar.serverUri = "ftp://172.17.56.20/CISCO/";
+
+            FTPConnectFileGet getTheFile = new FTPConnectFileGet(GlobVar.serverUri); //lista zawiera date modyfikacji modificationDate i nazwe pliku filename
+            RouterConfig routerConfigObj = new RouterConfig();
+
+
+            Console.WriteLine(getTheFile.Max(x => x.modificationDate));
+
+            foreach (FTPFileModificationDate file in getTheFile.GetNewestRouter())
             {
-                file.configRaw
+
+                routerConfigObj.DownloadConfigurationFile(file);
             }
 
             //CiscoConfigSection:
@@ -33,30 +40,33 @@ namespace ephoneTables
             Dictionary<string, Dictionary<string, string>> ephone;
             Dictionary<string, Dictionary<string, string>> ephonedn;
 
-            foreach (string ephone_number in ephone.Keys)
+            /*foreach (string ephone_number in ephone.Keys)
             {
                 if (!ephone[ephone_number].ContainsKey("name"))
                 {
-                    
+
                 }
-                    
+
 
                 try
                 {
                     ephone[ephone_number]["name"];
                 }
-                catch (key`)
-            }
-             
+                catch (Exception ex)
+                {
+
+                }
+
+            }*/
 
 
-            Console.WriteLine(latestFile);
+            //Console.WriteLine(latestFile);
 
 
 
 
 
-            //List<string> filesList = new List<string>(getTheFile.FTPConnect());
+            /*//List<string> filesList = new List<string>(getTheFile.FTPConnect());
 
             //FTPFile modDate = new FTPFile();
             //List<DateTime> listOfDates = new List<DateTime>(modDate.dateModified("ftp://172.17.56.20/CISCO/", filesList));
@@ -66,7 +76,7 @@ namespace ephoneTables
             //int j = 0;
             //List<DateTime> listDateTime = new List<DateTime>();                    
 
-            
+
 
             //int dateIndex = 0;
             //dateIndex = listOfDates.IndexOf(listDateTime.Max());
@@ -94,8 +104,9 @@ namespace ephoneTables
             Console.WriteLine("Operation complete. If log is empty, ephone records has not been found in newest file on server");
             Console.WriteLine("Execution time: " + ts);
             Console.ReadKey();
+
+
         }
-                
         /// <summary>
         /// Metoda wyszukujaca dane w tresci plikow
         /// </summary>
@@ -117,7 +128,7 @@ namespace ephoneTables
             //test
             string s = "empty";
             Match emptyMatch = Regex.Match(s, @"\b(empty)\b");
-            
+
             int temp = 0, iter1 = 0;
 
             for (int i = 0; i < fileContentArr.Count(); i++)
@@ -128,7 +139,7 @@ namespace ephoneTables
                 }
             }
             GlobVar.daneDoTabelki = new Match[temp, 7]; //0 - ephone name; 1 - mac; 2 - type; 3 - button; 4 - numer z nazwy ephone-dn; 5 - number; 6 - label
-            //temp = 0;
+                                                        //temp = 0;
 
             for (int i = 0; i < fileContentArr.Count(); i++)
             {
@@ -202,11 +213,11 @@ namespace ephoneTables
                                     }
                                 }
                             }
-                        }                      
-                    }                    
+                        }
+                    }
                     iter1++;
                 }
-            }            
+            }
 
             for (int i = 0; i < temp; i++) //drukowanie zawaartosci tabelki do konsoli
             {

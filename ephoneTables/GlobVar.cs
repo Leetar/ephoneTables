@@ -13,5 +13,6 @@ namespace ephoneTables
         public static Match[,] daneDoTabelki { get; set; }
         public static Match buttonMatchGlob { get; set;  }
         public static Match macMatch { get; set;  }
+        public static string serverUri { get; set;  } 
     }
 }
