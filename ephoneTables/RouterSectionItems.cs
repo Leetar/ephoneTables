@@ -11,13 +11,18 @@ namespace ephoneTables
     {
         public RouterSectionItems(string[] sectionContent) //przekazywać stringa z już wydzielona sekcją
         {
-            string[] fileContentArray = fileContent.Split('\n');
-            
-            foreach(Match m in Regex.Matches(fileContent, @"\b" + ephoneInstance + @"\b"))
+            foreach(string inSectionLine in sectionContent)
             {
-                IEnumerable<string> sections = fileContent.IndexOf(ephoneInstance);
-                Console.WriteLine(sections);
+
             }
+
+            //string[] fileContentArray = fileContent.Split('\n');
+            
+            //foreach(Match m in Regex.Matches(fileContent, @"\b" + ephoneInstance + @"\b"))
+            //{
+            //    IEnumerable<string> sections = fileContent.IndexOf(ephoneInstance);
+            //    Console.WriteLine(sections);
+            //}
 
 
             /* number A0001

@@ -13,10 +13,10 @@ namespace ephoneTables
 {
     class Program
     {
-
-
         static void Main(string[] args)
         {
+            
+
             //czas wykonywania programu
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -120,7 +120,6 @@ namespace ephoneTables
 
             Match ephoneNameMatch;
             Match typeMatch;
-            Match buttonMatch;
             Match primaryDNMatch; //numer z nazwy 'ephone-dn xxx'
             Match primaryDNnumberMatch;
             Match primaryDNLabelMatch;
