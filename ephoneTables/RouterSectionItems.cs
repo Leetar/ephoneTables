@@ -9,13 +9,13 @@ namespace ephoneTables
 {
     class RouterSectionItems : Dictionary<string, string>
     {
-        public RouterSectionItems(string fileContent, FTPFileModificationDate filename, string ephoneInstance)
+        public RouterSectionItems(string[] sectionContent) //przekazywać stringa z już wydzielona sekcją
         {
             string[] fileContentArray = fileContent.Split('\n');
             
             foreach(Match m in Regex.Matches(fileContent, @"\b" + ephoneInstance + @"\b"))
             {
-                IEnumerable<string> sections = fileContent.Select();
+                IEnumerable<string> sections = fileContent.IndexOf(ephoneInstance);
                 Console.WriteLine(sections);
             }
 
