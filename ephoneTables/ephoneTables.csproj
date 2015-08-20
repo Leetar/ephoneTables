@@ -57,6 +57,7 @@
     <Compile Include="FTPConnectFileGet.cs" />
     <Compile Include="ftpPlik.cs" />
     <Compile Include="ftpPliki.cs" />
+    <Compile Include="GetConfigTextContentToString.cs" />
     <Compile Include="GlobVar.cs" />
     <Compile Include="FTPFileModificationDate.cs" />
     <Compile Include="Program.cs" />

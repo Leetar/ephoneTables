@@ -9,11 +9,14 @@ namespace ephoneTables
 {
     class RouterSectionItems : Dictionary<string, string>
     {
-        public RouterSectionItems(string[] fileContentArray, FTPFileModificationDate filename, string ephoneInstance)
+        public RouterSectionItems(string fileContent, FTPFileModificationDate filename, string ephoneInstance)
         {
-            foreach(string m in Regex.Matches(fileContentArray, @"\b" + ephoneInstance + @"\b"))
+            string[] fileContentArray = fileContent.Split('\n');
+            
+            foreach(Match m in Regex.Matches(fileContent, @"\b" + ephoneInstance + @"\b"))
             {
-
+                IEnumerable<string> sections = fileContent.Select();
+                Console.WriteLine(sections);
             }
 
 

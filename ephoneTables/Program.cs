@@ -147,7 +147,7 @@ namespace ephoneTables
                 {
                     ephoneNameMatch = Regex.Match(fileContentArr[i], @"\b\d{1,4}");
                     GlobVar.daneDoTabelki[iter1, 0] = ephoneNameMatch;
-
+                    
                     //tutaj na ponizsza linie przerywac jesli jest "!"
                     for (int ii = i; ii < 20; ii++)
                     {

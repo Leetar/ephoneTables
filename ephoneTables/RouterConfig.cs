@@ -16,10 +16,7 @@ namespace ephoneTables
         public void DownloadConfigurationFile(FTPFileModificationDate filename)
         {
             // pociagniecie configa
-            WebClient client = new WebClient();
-            client.Credentials = new NetworkCredential("crawl", "qwerty123");
-            StreamReader reader2 = new StreamReader(client.OpenRead(GlobVar.serverUri + filename.filename)); //tu bierze najnowszy plik
-            string fileContent = reader2.ReadToEnd();
+            string fileContent = GetConfigTextContentToString.ConfigContent(filename);
 
             string[] fileContentArray = fileContent.Split('\n');
             ephone = new Dictionary<string, RouterSectionItems>();
@@ -28,8 +25,11 @@ namespace ephoneTables
             {
                 if(Regex.Match(fileContent, @"\bephone\s+\d+\b").Success)
                 {
+                    
                     Console.WriteLine(Regex.Match(fileContent, @"\bephone\s+\d+\b"));
-                    ephone.Add(Regex.Match(fileContent, @"\bephone\s+(\d+)\b").ToString(), new RouterSectionItems(fileContentArray, filename, Regex.Match(fileContent, @"\bephone\s+\d+\b").ToString()));
+                    ephone.Add(Regex.Match(fileContent, @"\bephone\s+(\d+)\b").ToString(), 
+                        new RouterSectionItems(fileContent, filename, Regex.Match(fileContent, 
+                        @"\bephone\s+\d+\b").ToString()));
                 }
             }
 
