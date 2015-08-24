@@ -20,15 +20,17 @@ namespace ephoneTables
 
             string currentSectionName = "";
             List<string> currentSectionLines = new List<string>();
-
+            ephone = new Dictionary<string, RouterSectionItems>();
             foreach (string configLine in fileContent.Split('\n'))
             {
                 configLine.Trim();
 
                 if(configLine == Regex.Match(configLine, @"\bephone\s+\d+\b").ToString())
                 {
-                    currentSectionName = configLine;
+                    currentSectionName = configLine;                 
+
                 }
+
 
                 if (currentSectionName.Length > 0)
                 {
@@ -39,27 +41,28 @@ namespace ephoneTables
                         ephone[currentSectionName] = 
                             new RouterSectionItems(currentSectionLines.ToArray());
                         currentSectionName = "";
+                        currentSectionLines.Clear();
                     }
                     else
                     {
                         currentSectionLines.Add(configLine);
                     }
                 }
-                else
-                {
-                    // jezeli nie ma sekcje
+                //else
+                //{
+                //    // jezeli nie ma sekcje
 
-                    string[] groups = Regex.Split(configLine, @"\bephone\s+(\d+)\b");
-                    // jezeli nie udalo sie znalesc sekcji
-                    if (groups == null || groups.Length == 0)
-                    {
-                        continue;
-                    }
-                    currentSectionName = groups[0].Trim();
-                }
+                //    string[] groups = Regex.Split(configLine, @"\bephone\s+(\d+)\b");
+                //    // jezeli nie udalo sie znalesc sekcji
+                //    if (groups == null || groups[0] == "")
+                //    {
+                //        continue;
+                //    }
+                //    currentSectionName = groups[0].Trim();
+                //}
             }
 
-            ephone = new Dictionary<string, RouterSectionItems>();
+            
 
             foreach (Match ephoneMatch in Regex.Matches(fileContent, @"\bephone\s+\d+\b"))
             {
