@@ -24,6 +24,7 @@ namespace ephoneTables
 
             FTPConnectFileGet getTheFile = new FTPConnectFileGet(GlobVar.serverUri); //lista zawiera date modyfikacji modificationDate i nazwe pliku filename
             RouterConfig routerConfigObj = new RouterConfig();
+            Tuple<Dictionary<string, RouterSectionItems>, Dictionary<string, RouterSectionItems>> ephonePairs;
 
 
             Console.WriteLine(getTheFile.Max(x => x.modificationDate));
@@ -31,7 +32,7 @@ namespace ephoneTables
             foreach (FTPFileModificationDate filenameAndModDateAndCME in getTheFile.GetNewestRouter())
             {
 
-                routerConfigObj.DownloadConfigurationFile(filenameAndModDateAndCME);
+                 routerConfigObj.DownloadConfigurationFile(filenameAndModDateAndCME);
                 
             }
 
@@ -42,7 +43,7 @@ namespace ephoneTables
             //Dictionary<string, Dictionary<string, string>> ephonedn;
 
             Dictionary<string, RouterSectionItems> ephone = new Dictionary<string, RouterSectionItems>();
-            ephone = routerConfigObj.ephone;
+            //ephone = routerConfigObj.ephone;
 
 
             /*foreach (string ephone_number in ephone.Keys)

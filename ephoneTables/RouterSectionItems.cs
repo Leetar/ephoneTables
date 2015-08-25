@@ -22,9 +22,7 @@ namespace ephoneTables
                 string value = string.Join(" ", tknsList.ToArray()).Trim();
 
                 if (this.ContainsKey(name)) { continue; }
-                this.Add(name, value);
-                
-                
+                this.Add(name, value);                
             }
 
             //string[] fileContentArray = fileContent.Split('\n');
