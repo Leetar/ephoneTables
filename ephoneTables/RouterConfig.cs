@@ -10,27 +10,34 @@ namespace ephoneTables
 {
     class RouterConfig
     {
-        Dictionary<string, RouterSectionItems> ephone;
-        Dictionary<string, RouterSectionItems> ephonedn;
+        public Dictionary<string, RouterSectionItems> ephone = new Dictionary<string, RouterSectionItems>();
+        Dictionary<string, RouterSectionItems> ephoneDN = new Dictionary<string, RouterSectionItems>();
 
         public void DownloadConfigurationFile(FTPFileModificationDate filename)
         {
             // pociagniecie configa
             string fileContent = GetConfigTextContentToString.ConfigContent(filename);
-
+            DownloadSection(fileContent, @"\bephone\s+\d+.*\b", "ephone");
+            DownloadSection(fileContent, @"\bephone-dn\s+\d+.*\b", "ephonedn");
+            Console.WriteLine("dupa");
+            
+        }
+        //=============================
+        private void DownloadSection(string fileContent, string expressionSectionType, string sectionName)
+        {
             string currentSectionName = "";
             List<string> currentSectionLines = new List<string>();
-            ephone = new Dictionary<string, RouterSectionItems>();
+            
+
             foreach (string configLine in fileContent.Split('\n'))
             {
                 configLine.Trim();
 
-                if(configLine == Regex.Match(configLine, @"\bephone\s+\d+\b").ToString())
+                if (configLine == Regex.Match(configLine, expressionSectionType).ToString())
                 {
-                    currentSectionName = configLine;                 
+                    currentSectionName = configLine;
 
-                }
-
+                }                
 
                 if (currentSectionName.Length > 0)
                 {
@@ -38,8 +45,21 @@ namespace ephoneTables
 
                     if (configLine == "!")
                     {
-                        ephone[currentSectionName] = 
-                            new RouterSectionItems(currentSectionLines.ToArray());
+                        if (sectionName == "ephone")
+                        {
+                            ephone[currentSectionName] =
+                           new RouterSectionItems(currentSectionLines.ToArray());
+                        }
+                        else if (sectionName == "ephonedn")
+                        {
+                            ephoneDN[currentSectionName] =
+                           new RouterSectionItems(currentSectionLines.ToArray());
+                        }
+                        else
+                        {
+
+                        }
+                                               
                         currentSectionName = "";
                         currentSectionLines.Clear();
                     }
@@ -48,41 +68,8 @@ namespace ephoneTables
                         currentSectionLines.Add(configLine);
                     }
                 }
-                //else
-                //{
-                //    // jezeli nie ma sekcje
-
-                //    string[] groups = Regex.Split(configLine, @"\bephone\s+(\d+)\b");
-                //    // jezeli nie udalo sie znalesc sekcji
-                //    if (groups == null || groups[0] == "")
-                //    {
-                //        continue;
-                //    }
-                //    currentSectionName = groups[0].Trim();
-                //}
             }
-
-            
-
-            foreach (Match ephoneMatch in Regex.Matches(fileContent, @"\bephone\s+\d+\b"))
-            {
-                if(Regex.Match(fileContent, @"\bephone\s+\d+\b").Success)
-                {
-                    
-                    Console.WriteLine(Regex.Match(fileContent, @"\bephone\s+\d+\b"));
-                    //ephone.Add(Regex.Match(fileContent, @"\bephone\s+(\d+)\b").ToString(), 
-                        //new RouterSectionItems(fileContent, filename, Regex.Match(fileContent, 
-                       // @"\bephone\s+\d+\b").ToString()));
-                }
-            }
-
-            //RouterSectionItems sectionItems = new RouterSectionItems(fileContent, filename);
-            //Match fileCME = Regex.Match(GlobVar.serverUri + lines[dateIndex], @"\w{14}");
-            //GlobVar.fileCME = fileCME;
-
-
-       
-        }
+        }       
     }
 }
 //tylko w jednym pliku naraz

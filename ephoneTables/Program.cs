@@ -28,17 +28,22 @@ namespace ephoneTables
 
             Console.WriteLine(getTheFile.Max(x => x.modificationDate));
 
-            foreach (FTPFileModificationDate file in getTheFile.GetNewestRouter())
+            foreach (FTPFileModificationDate filenameAndModDateAndCME in getTheFile.GetNewestRouter())
             {
 
-                routerConfigObj.DownloadConfigurationFile(file);
+                routerConfigObj.DownloadConfigurationFile(filenameAndModDateAndCME);
+                
             }
 
             //CiscoConfigSection:
             //Dictionary<string, string>
 
-            Dictionary<string, Dictionary<string, string>> ephone;
-            Dictionary<string, Dictionary<string, string>> ephonedn;
+            //Dictionary<string, Dictionary<string, string>> ephone;
+            //Dictionary<string, Dictionary<string, string>> ephonedn;
+
+            Dictionary<string, RouterSectionItems> ephone = new Dictionary<string, RouterSectionItems>();
+            ephone = routerConfigObj.ephone;
+
 
             /*foreach (string ephone_number in ephone.Keys)
             {
@@ -61,43 +66,8 @@ namespace ephoneTables
 
 
             //Console.WriteLine(latestFile);
-
-
-
-
-
-            /*//List<string> filesList = new List<string>(getTheFile.FTPConnect());
-
-            //FTPFile modDate = new FTPFile();
-            //List<DateTime> listOfDates = new List<DateTime>(modDate.dateModified("ftp://172.17.56.20/CISCO/", filesList));
-
-
-
-            //int j = 0;
-            //List<DateTime> listDateTime = new List<DateTime>();                    
-
-
-
-            //int dateIndex = 0;
-            //dateIndex = listOfDates.IndexOf(listDateTime.Max());
-
-            //bierze tresc pliku do streamreadera a potem przenosi do zmiennej typu string
-            /*WebClient client = new WebClient();
-            client.Credentials = new NetworkCredential("crawl", "qwerty123");
-            //StreamReader reader2 = new StreamReader(client.OpenRead(serverUri + lines[dateIndex])); //tu bierze najnowszy plik
-            StreamReader reader2 = new StreamReader(client.OpenRead(serverUri + "RTR_100_00_GNS-configAug--1-23-57-06.184-7")); //hardcode konkretnego pliku w celach debugu
-
-            Match fileCME = Regex.Match(serverUri + lines[dateIndex], @"\w{14}");
-            GlobVar.fileCME = fileCME;
-
-            string fileContent = reader2.ReadToEnd();
-
-            for (int i = 0; i < lines.Count() - 1; i++) // DRUKUJE LISTĘ DAT
-            {
-                //Console.WriteLine(listDateTime[i].ToString());
-            }
-
-            searchThroughFile(fileContent);*/
+            
+            
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
