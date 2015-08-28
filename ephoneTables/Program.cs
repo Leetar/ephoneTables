@@ -15,24 +15,14 @@ namespace ephoneTables
     {
         static void Main(string[] args)
         {
-            
             //czas wykonywania programu
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             GlobVar.serverUri = "ftp://172.17.56.20/CISCO/";
 
-            //AddToSharepoint addRoutersToSP = new AddToSharepoint();
 
             AddToSharepoint.AddToSharepointTables();
-            //AddToSharepoint;
-            //addRoutersToSP();
 
-
-            //Console.WriteLine(getTheFile.Max(x => x.modificationDate));
-
-            
-             
-            //
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;

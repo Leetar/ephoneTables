@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
+using System.Xml;
 
 namespace ephoneTables
 {
@@ -21,14 +22,25 @@ namespace ephoneTables
             ccontext.Load(itemList.Fields);
             ccontext.ExecuteQuery();
 
+            XmlDocument XmlCitiesTranslationList = new XmlDocument();
+            try
+            {
+                XmlCitiesTranslationList.Load("CityCodeTranslation.xml");
+            }
+            catch (XmlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            //XmlCitiesTranslationList
+
+
             foreach (Field field in itemList.Fields)
             {
                 Console.WriteLine(field.Title + " " + field.InternalName);
             }
 
             ListItemCreationInformation newItem = new ListItemCreationInformation();
-            //ListItem listItem = itemList.AddItem(newItem);
-            //ListItem listItem = itemList.AddItem(newItem);
 
             string[] splittedButton;
             string[] splittedDNnumber;

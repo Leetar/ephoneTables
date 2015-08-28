@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE citiesList [
+  <!ELEMENT name (#PCDATA)>
+  <!ELEMENT code (#PCDATA)>
+  <!ELEMENT city (name, code)>
+]>
+
+<citiesList>
+
+  <city>
+    <name id ="01">Olkusz</name>
+    <code id ="01">OLK</code>
+  </city>
+
+  <city>
+    <name id ="02">Wschowa</name>
+    <code id ="02">WSH</code>
+  </city>
+
+  <city>
+    <name id ="03">Świebodzin</name>
+    <code id ="03">SWB</code>
+  </city>
+
+  <city>
+    <name id ="04">Grupa Nowy Szpital</name>
+    <code id ="04">GNS</code>
+  </city>
+
+  <city>
+    <name id ="05">Świecie</name>
+    <code id ="05">SWE</code>
+  </city>
+
+  <city>
+    <name id ="06">Skwierzyna</name>
+    <code id ="06">SKW</code>
+  </city>
+
+  <city>
+    <name id ="07">Wąbrzeźno</name>
+    <code id ="07">WAB</code>
+  </city>
+
+  <city>
+    <name id ="08">Kostrzyn</name>
+    <code id ="08">KOS</code>
+  </city>
+
+  <city>
+    <name id ="09">Nakło</name>
+    <code id ="09">NKO</code>
+  </city>
+
+  <city>
+    <name id ="10">Szubin</name>
+    <code id ="10">SBN</code>
+  </city>
+
+</citiesList>

@@ -25,8 +25,7 @@ namespace ephoneTables
             List<EphoneTuple> ephonePairedList = new List<EphoneTuple>();
 
             ephonePairedList = setEphonePairs();
-            Console.WriteLine("dupa");
-            Console.WriteLine(ephonePairedList);
+            //Console.WriteLine(ephonePairedList);
             return ephonePairedList;
 
         }

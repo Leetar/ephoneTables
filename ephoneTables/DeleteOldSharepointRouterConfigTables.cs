@@ -21,8 +21,16 @@ namespace ephoneTables
             ListItemCollection listItems = routerConfigListOnSharepoint.GetItems(new CamlQuery());
             ccontext.Load(routerConfigListOnSharepoint);
             ccontext.Load(listItems);
-            ccontext.ExecuteQuery();
-            
+            try
+            {
+                ccontext.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + Environment.NewLine + "Terminating program due to error occurence...");
+                System.Threading.Thread.Sleep(5000);
+                System.Environment.Exit(0);
+            }
             while(listItems.Count != 0)
             {
                 listItems[listItems.Count - 1].DeleteObject();
