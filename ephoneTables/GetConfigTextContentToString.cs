@@ -18,7 +18,7 @@ namespace ephoneTables
             WebClient client = new WebClient();
             client.Credentials = new NetworkCredential("crawl", "qwerty123");
             //StreamReader reader2 = new StreamReader(client.OpenRead(GlobVar.serverUri + filename.filename)); //tu bierze najnowszy plik
-            StreamReader reader2 = new StreamReader(client.OpenRead(GlobVar.serverUri + "RTR_100_00_GNS-configJul-29-12-57-58.585-5"));
+            StreamReader reader2 = new StreamReader(client.OpenRead(GlobVar.serverUri + filename.filename));
             return reader2.ReadToEnd();
         }
     }

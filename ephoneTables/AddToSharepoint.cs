@@ -11,7 +11,32 @@ namespace ephoneTables
     {
         public static void AddToSharepointTables()
         {
-            /*string spURL = "http://sp.eot.pl/Test";
+            FTPConnectFileGet getTheFile = new FTPConnectFileGet(GlobVar.serverUri); //lista zawiera date modyfikacji modificationDate i nazwe pliku filename
+            RouterConfig routerConfigObj = new RouterConfig();
+            List<EphoneTuple> ephonePairedList = new List<EphoneTuple>();
+            
+            //Delete list entrires
+            DeleteOldSharepointRouterConfigTables.deleteAll();
+
+
+            foreach (FTPFileModificationDate filenameAndModDateAndCME in getTheFile.GetUniqueRoutersList())
+            {
+                //
+                ephonePairedList = routerConfigObj.DownloadConfigurationFile(filenameAndModDateAndCME);
+                routerConfigToSharepoint configToSP = new routerConfigToSharepoint(ephonePairedList, filenameAndModDateAndCME);
+                //tutaj ma wywolywac klase dodajaca dane do sharepointa.
+            }
+
+
+
+
+
+
+
+
+
+
+            string spURL = "http://sp.eot.pl/Test";
             ClientContext clientcontext = new ClientContext(spURL);
 
             List oList = clientcontext.Web.Lists.GetByTitle("testEwidencja");
@@ -25,7 +50,7 @@ namespace ephoneTables
 
             clientcontext.Load(collUsr);
 
-            int usrIndexSel = arrayValues(comboBox1.SelectedIndex); //get index of selected combobox item by arrayValues method.
+            /*int usrIndexSel = arrayValues(comboBox1.SelectedIndex); //get index of selected combobox item by arrayValues method.
 
             oListItem["Adresat"] = collUsr.GetById(usrIndexSel);
             oListItem["Title"] = tbNadawca.Text;

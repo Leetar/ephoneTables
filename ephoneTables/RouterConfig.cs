@@ -12,28 +12,30 @@ namespace ephoneTables
     {
         Dictionary<string, RouterSectionItems> ephone = new Dictionary<string, RouterSectionItems>();
         Dictionary<string, RouterSectionItems> ephoneDN = new Dictionary<string, RouterSectionItems>();
-        Dictionary<Dictionary<string, RouterSectionItems>, Dictionary<string, RouterSectionItems>> pehonepairs;
+        //Dictionary<Dictionary<string, RouterSectionItems>, Dictionary<string, RouterSectionItems>> ehonepairs;
 
-        public void DownloadConfigurationFile(FTPFileModificationDate filename)
+        public List<EphoneTuple> DownloadConfigurationFile(FTPFileModificationDate filename)
         {
             // pociagniecie configa
             string fileContent = GetConfigTextContentToString.ConfigContent(filename);
+            ephone.Clear();
+            ephoneDN.Clear();
             DownloadSection(fileContent, @"\bephone\s+\d+.*\b", "ephone");
             DownloadSection(fileContent, @"\bephone-dn\s+\d+.*\b", "ephonedn");
-            List<Tuple<KeyValuePair<string, RouterSectionItems>, KeyValuePair<string, RouterSectionItems>>> ephonePairedList =
-                new List<Tuple<KeyValuePair<string, RouterSectionItems>, KeyValuePair<string, RouterSectionItems>>>();
+            List<EphoneTuple> ephonePairedList = new List<EphoneTuple>();
 
             ephonePairedList = setEphonePairs();
             Console.WriteLine("dupa");
-            Console.WriteLine(ephonePairedList.);
+            Console.WriteLine(ephonePairedList);
+            return ephonePairedList;
 
         }
         //=============================
         private void DownloadSection(string fileContent, string expressionSectionType, string sectionName)
         {
+            
             string currentSectionName = "";
             List<string> currentSectionLines = new List<string>();
-            //Tuple<Dictionary<string, RouterSectionItems>, Dictionary<string, RouterSectionItems>> ephonePairs;
 
             foreach (string configLine in fileContent.Split('\n'))
             {
@@ -79,14 +81,10 @@ namespace ephoneTables
 
         }
         //=============================
-        private List<Tuple<KeyValuePair<string, RouterSectionItems>, KeyValuePair<string, RouterSectionItems>>> setEphonePairs()
+        private List<EphoneTuple> setEphonePairs()
         {
-            Tuple<KeyValuePair<string, RouterSectionItems>, KeyValuePair<string, RouterSectionItems>> ephonePairs;
-
-            List<Tuple<KeyValuePair<string, RouterSectionItems>, KeyValuePair<string, RouterSectionItems>>> ephonePairList = 
-                new List<Tuple<KeyValuePair<string, RouterSectionItems>, KeyValuePair<string, RouterSectionItems>>>();
-
-            int i = 0;
+            EphoneTuple ephonePairs;
+            List<EphoneTuple> ephonePairList = new List<EphoneTuple>();
 
             foreach(var ephoneEntry in ephone)
             {
@@ -101,7 +99,7 @@ namespace ephoneTables
 
                         if (buttonNumberNormal[1] == ephoneDNnumber)
                         {
-                            ephonePairs = new Tuple<KeyValuePair<string, RouterSectionItems>, KeyValuePair<string, RouterSectionItems>>(ephoneEntry, ephoneDNEntry);
+                            ephonePairs = new EphoneTuple(ephoneEntry, ephoneDNEntry);
                             ephonePairList.Add(ephonePairs); // prawdopodobnie skonczone. Dodawanie par do listy.
                         }
                     }

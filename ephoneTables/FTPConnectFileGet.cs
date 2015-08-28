@@ -35,7 +35,7 @@ namespace ephoneTables
             }
         }
 
-        public IEnumerable<FTPFileModificationDate> GetNewestRouter()
+        public IEnumerable<FTPFileModificationDate> GetUniqueRoutersList()
         {
             List<FTPFileModificationDate> resultList = new List<FTPFileModificationDate>();
 

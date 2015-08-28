@@ -24,19 +24,6 @@ namespace ephoneTables
                 if (this.ContainsKey(name)) { continue; }
                 this.Add(name, value);                
             }
-
-            //string[] fileContentArray = fileContent.Split('\n');
-            
-            //foreach(Match m in Regex.Matches(fileContent, @"\b" + ephoneInstance + @"\b"))
-            //{
-            //    IEnumerable<string> sections = fileContent.IndexOf(ephoneInstance);
-            //    Console.WriteLine(sections);
-            //}
-
-
-            /* number A0001
-            name Conference
-            conference ad-hoc*/
         }
     }
 }
