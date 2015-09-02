@@ -22,19 +22,10 @@ namespace ephoneTables
             ccontext.Load(itemList.Fields);
             ccontext.ExecuteQuery();
 
-            XmlDocument XmlCitiesTranslationList = new XmlDocument();
-            try
-            {
-                XmlCitiesTranslationList.Load("CityCodeTranslation.xml");
-            }
-            catch (XmlException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
+            GetCityNames cityNameExtension =  new GetCityNames();
+            cityNameExtension.GetCityNamesDict();
             //XmlCitiesTranslationList
-
-
+            
             foreach (Field field in itemList.Fields)
             {
                 Console.WriteLine(field.Title + " " + field.InternalName);
@@ -44,7 +35,7 @@ namespace ephoneTables
 
             string[] splittedButton;
             string[] splittedDNnumber;
-
+            string[] routerCMEname;
             //string itemInternalName = itemList.Fields.GetByInternalNameOrTitle("PRIMARY DN").InternalName;
 
             foreach (EphoneTuple element in ephonePairedList)
@@ -52,6 +43,17 @@ namespace ephoneTables
                 ListItem listItem = itemList.AddItem(newItem);
                 listItem["CME"] = filenameAndModDateAndCME.routerName;
                 listItem["EPHONE"] = element.Item1.Value["ephone"];
+
+                routerCMEname = filenameAndModDateAndCME.routerName.Split('_');
+
+                foreach (string key in cityNameExtension.Keys)
+                {
+                    if (key == routerCMEname[3])
+                    {
+                        listItem["PBX"] = cityNameExtension[key];
+                    }
+                }
+                
 
                 if (element.Item1.Value.ContainsKey("mac-address"))
                 {
