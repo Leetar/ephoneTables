@@ -28,7 +28,7 @@ namespace ephoneTables
             while (i == true)
             {
                 FTPConnectFileGet dates = new FTPConnectFileGet("ftp://172.17.56.20/CISCO");
-                
+
 
                 if (lastModList.Count > 0)
                 {
@@ -36,7 +36,8 @@ namespace ephoneTables
                     {
                         if (lastModList[j].modificationDate != dates[j].modificationDate)
                         {
-
+                            Program prog = new Program();
+                            // mail o powielajacym sie macu - it@eot.pl, z dowolnego aila
                         }
                     }
                 }
@@ -44,7 +45,7 @@ namespace ephoneTables
                 {
                     lastModList = dates;
                 }
-                
+
 
             }
 

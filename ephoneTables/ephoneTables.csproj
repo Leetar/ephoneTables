@@ -83,6 +83,7 @@
     <Compile Include="RouterConfig.cs" />
     <Compile Include="routerConfigToSharepoint.cs" />
     <Compile Include="RouterSectionItems.cs" />
+    <Compile Include="TestForMacDuplicates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
