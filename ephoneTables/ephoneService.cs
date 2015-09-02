@@ -37,6 +37,7 @@ namespace ephoneTables
                         if (lastModList[j].modificationDate != dates[j].modificationDate)
                         {
                             Program prog = new Program();
+                            
                             // mail o powielajacym sie macu - it@eot.pl, z dowolnego aila
                         }
                     }
