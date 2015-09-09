@@ -1,50 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Mail;
 using Microsoft.SharePoint.Client;
 
 namespace ephoneTables
 {
-    class TestForMacDuplicates : List<MacAndCME>
+    class TestForMacDuplicates : List<MacAndCme>
     {
-        public List<Tuple<MacAndCME, MacAndCME>> TestForMacDuplicatesMethod()
+        public List<Tuple<MacAndCme, MacAndCme>> TestForMacDuplicatesMethod()
         {
-            getlistItems();
+            GetlistItems();
             //var duplicates = this.GroupBy(s => s.MAC);
-            List<Tuple<MacAndCME, MacAndCME>> duplicates = new List<Tuple<MacAndCME, MacAndCME>>();
+            List<Tuple<MacAndCme, MacAndCme>> duplicates = new List<Tuple<MacAndCme, MacAndCme>>();
 
-            foreach (MacAndCME element1 in this)
+            foreach (MacAndCme element1 in this)
             {
-                foreach (MacAndCME element2 in this)
+                foreach (MacAndCme element2 in this)
                 {
                     if (element1 == element2)
                     {
                         continue;
                     }
 
-                    if (element1.MAC.ToUpper() == element2.MAC.ToUpper())
+                    if (String.Equals(element1.Mac, element2.Mac, StringComparison.CurrentCultureIgnoreCase))
                     {
 
                         if (duplicates.Count > 0)
                         {
-                            if (duplicates.Last().Item2.EPHONE == element1.EPHONE)
+                            if (duplicates.Last().Item2.Ephone == element1.Ephone)
                                 continue;
                         }
 
 
-                        duplicates.Add(new Tuple<MacAndCME, MacAndCME>(element1, element2));
+                        duplicates.Add(new Tuple<MacAndCme, MacAndCme>(element1, element2));
                     }
                 }
             }
             return duplicates;
         }
 
-        public void getlistItems()
+        public void GetlistItems()
         {
-            string siteUrl = "http://sharepoint.eot.int/kb/";
+            const string siteUrl = "http://sharepoint.eot.int/kb/";
 
             using (ClientContext clientContext = new ClientContext(siteUrl))
             {
@@ -52,12 +49,13 @@ namespace ephoneTables
 
                 List oList = clientContext.Web.Lists.GetByTitle("Klienci VOIP");
 
-                CamlQuery camlQuery = new CamlQuery();
+                CamlQuery camlQuery = new CamlQuery
+                {
+                    ViewXml =   "<View>"
+                              + "<ViewFields><FieldRef Name='CME' /><FieldRef Name='MAC' /><FieldRef Name='EPHONE' /></ViewFields>"
+                              + "</View>"
+                };
 
-                camlQuery.ViewXml =
-                      "<View>"
-                    + "<ViewFields><FieldRef Name='CME' /><FieldRef Name='MAC' /><FieldRef Name='EPHONE' /></ViewFields>"
-                    + "</View>";
 
                 ListItemCollection collListItem = oList.GetItems(camlQuery);
                 clientContext.Load(collListItem,
@@ -70,11 +68,11 @@ namespace ephoneTables
 
                 foreach (ListItem oListItem in collListItem)
                 {
-                    this.Add(new MacAndCME()
+                    this.Add(new MacAndCme()
                     {
-                        CME = oListItem["CME"].ToString(),
-                        MAC = oListItem["MAC"].ToString(),
-                        EPHONE = oListItem["EPHONE"].ToString()
+                        Cme = oListItem["CME"].ToString(),
+                        Mac = oListItem["MAC"].ToString(),
+                        Ephone = oListItem["EPHONE"].ToString()
                     });
                 }
             }

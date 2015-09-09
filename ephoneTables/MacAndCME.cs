@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ephoneTables
+﻿namespace ephoneTables
 {
-    class MacAndCME
+    class MacAndCme
     {
-        public string CME { get; set; }
-        public string MAC { get; set; }
-        public string EPHONE { get; set; }
+        public string Cme { get; set; }
+        public string Mac { get; set; }
+        public string Ephone { get; set; }
     }
 }

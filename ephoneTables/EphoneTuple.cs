@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ephoneTables
 {
@@ -18,11 +14,11 @@ namespace ephoneTables
             get;
             private set;
         }
-        public EphoneTuple(KeyValuePair<string, RouterSectionItems> _item1, 
-            KeyValuePair<string, RouterSectionItems> _item2)
+        public EphoneTuple(KeyValuePair<string, RouterSectionItems> item1, 
+            KeyValuePair<string, RouterSectionItems> item2)
         {
-            Item1 = _item1;
-            Item2 = _item2;
+            Item1 = item1;
+            Item2 = item2;
         }
     }
 }

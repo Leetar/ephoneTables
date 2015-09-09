@@ -1,19 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Net;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.Threading;
 
 namespace ephoneTables
 {
-    class ConnectToFTPgetReader
+    class ConnectToFtPgetReader
     {
-        public StreamReader getReaderMet(string serverUri)
+        public StreamReader GetReaderMet(string serverUri)
         {
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
             request.Method = WebRequestMethods.Ftp.ListDirectory;
@@ -21,8 +13,16 @@ namespace ephoneTables
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
             Stream responseStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
-            return reader;
+
+            if (responseStream != null)
+            {
+                StreamReader reader = new StreamReader(responseStream);
+                return reader;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

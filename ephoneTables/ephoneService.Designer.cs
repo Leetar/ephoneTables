@@ -1,6 +1,6 @@
 ﻿namespace ephoneTables
 {
-    partial class ephoneService
+    partial class EphoneService
     {
         /// <summary> 
         /// Required designer variable.

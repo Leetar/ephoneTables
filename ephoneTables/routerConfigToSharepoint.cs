@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.SharePoint.Client;
-using System.Xml;
 
 namespace ephoneTables
 {
-    class routerConfigToSharepoint
+    class RouterConfigToSharepoint
     {
-        public routerConfigToSharepoint(List<EphoneTuple> ephonePairedList, FTPFileModificationDate filenameAndModDateAndCME)
+        public RouterConfigToSharepoint(List<EphoneTuple> ephonePairedList, FtpFileModificationDate filenameAndModDateAndCme)
         {
-            string sharepointURL = "http://sharepoint.eot.int/kb/";
+            const string sharepointUrl = "http://sharepoint.eot.int/kb/";
 
-            using (ClientContext ccontext = new ClientContext(sharepointURL))
+            using (ClientContext ccontext = new ClientContext(sharepointUrl))
             {
                 Web web = ccontext.Web;
 
@@ -31,19 +26,19 @@ namespace ephoneTables
 
                 string[] splittedButton;
                 string[] splittedDNnumber;
-                string[] routerCMEname;
+                string[] routerCmEname;
 
                 foreach (EphoneTuple element in ephonePairedList)
                 {
                     ListItem listItem = itemList.AddItem(newItem);
-                    listItem["CME"] = filenameAndModDateAndCME.routerName;
+                    listItem["CME"] = filenameAndModDateAndCme.RouterName;
                     listItem["EPHONE"] = element.Item1.Value["ephone"];
 
-                    routerCMEname = filenameAndModDateAndCME.routerName.Split('_');
+                    routerCmEname = filenameAndModDateAndCme.RouterName.Split('_');
 
                     foreach (string key in cityNameExtension.Keys)
                     {
-                        if (key == routerCMEname[3])
+                        if (key == routerCmEname[3])
                         {
                             listItem["PBX"] = cityNameExtension[key];
                         }

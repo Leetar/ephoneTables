@@ -13,44 +13,48 @@ using System.Timers;
 namespace ephoneTables
 {
 
-    partial class ephoneService : ServiceBase
+    partial class EphoneService : ServiceBase
     {
-        List<FTPFileModificationDate> lastModList = new List<FTPFileModificationDate>();
-        public ephoneService()
+        List<FtpFileModificationDate> _lastModList = new List<FtpFileModificationDate>(); // na początku będzie puste
+        public EphoneService()
         {
             InitializeComponent();
+
+            this.ServiceName = "Ephone Configs To Sharepoint";
+            this.EventLog.Log = "Application";
+
+            this.CanHandlePowerEvent = true;
+            this.CanHandleSessionChangeEvent = true;
+            this.CanPauseAndContinue = true;
+            this.CanShutdown = true;
+            this.CanStop = true;
         }
 
         protected override void OnStart(string[] args)
         {
             // TODO: Add code here to start your service.
-            bool i = true;
+            const bool i = true;
+            int iteration = 0;
             while (i == true)
             {
-                FTPConnectFileGet dates = new FTPConnectFileGet("ftp://172.17.56.20/CISCO");
+                Console.WriteLine("beggining {0} iteration...", iteration);
+                FtpConnectFileGet dates = new FtpConnectFileGet("ftp://172.17.56.20/CISCO"); //w srodku jest Filename, ModificationDate i RouterName dla wszystkich routerów
+                iteration++;
 
-
-                if (lastModList.Count > 0)
+                if (_lastModList.Count > 0)
                 {
-                    for (int j = 0; j < lastModList.Count; j++)
+                    if (_lastModList.Count() < dates.Count)
                     {
-                        if (lastModList[j].modificationDate != dates[j].modificationDate)
-                        {
-                            Program prog = new Program();
-                            
-                            // mail o powielajacym sie macu - it@eot.pl, z dowolnego aila
-                        }
+                        Program.Main();
                     }
+                    System.Threading.Thread.Sleep(600000);
                 }
                 else
                 {
-                    lastModList = dates;
+                    _lastModList = dates;
+                    Program.Main();
                 }
-
-
             }
-
-
         }
 
         protected override void OnStop()

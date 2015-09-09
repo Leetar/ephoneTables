@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace ephoneTables
@@ -11,18 +8,16 @@ namespace ephoneTables
     {
         public void GetCityNamesDict()
         {
-            XmlDocument XmlCitiesTranslationList = new XmlDocument();
+            XmlDocument xmlCitiesTranslationList = new XmlDocument();
             try
             {
-                XmlCitiesTranslationList.Load("CityCodeTranslation.xml");
-                int elementsCount = XmlCitiesTranslationList.GetElementsByTagName("city").Count;
-
-                Dictionary<string, string> citiesList = new Dictionary<string, string>();
+                xmlCitiesTranslationList.Load("CityCodeTranslation.xml");
+                int elementsCount = xmlCitiesTranslationList.GetElementsByTagName("city").Count;
 
                 for (int i = 0; i < elementsCount; i++)
                 {
-                    this.Add(XmlCitiesTranslationList.GetElementsByTagName("code").Item(i).InnerText, 
-                        XmlCitiesTranslationList.GetElementsByTagName("name").Item(i).InnerText);
+                    this.Add(xmlCitiesTranslationList.GetElementsByTagName("code").Item(i).InnerText, 
+                        xmlCitiesTranslationList.GetElementsByTagName("name").Item(i).InnerText);
                 }
 
             }

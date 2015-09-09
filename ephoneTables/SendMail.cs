@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Xml;
-using System.Web;
 
 namespace ephoneTables
 {
@@ -19,7 +16,7 @@ namespace ephoneTables
             try
             {
                 TestForMacDuplicates dup = new TestForMacDuplicates();
-                List<Tuple<MacAndCME, MacAndCME>> duplicates = dup.TestForMacDuplicatesMethod();
+                List<Tuple<MacAndCme, MacAndCme>> duplicates = dup.TestForMacDuplicatesMethod();
 
                 if (duplicates.Count != 0)
                 {
@@ -37,7 +34,7 @@ namespace ephoneTables
                             this.Clear();
 
                             message.Subject = "EPHONE MAC DUPLICATES REPORT";
-                            message.Body = formatMailBody(duplicates).ToString();
+                            message.Body = FormatMailBody(duplicates).ToString();
 
                             message.IsBodyHtml = true;
 
@@ -79,7 +76,7 @@ namespace ephoneTables
         /// </summary>
         /// <param name="duplicates">contains list of tuple type that contains all of ephone pairs that have duplicate MAC addresses</param>
         /// <returns>formatted body as a HTML table</returns>
-        private StringBuilder formatMailBody(List<Tuple<MacAndCME, MacAndCME>> duplicates)
+        private StringBuilder FormatMailBody(List<Tuple<MacAndCme, MacAndCme>> duplicates)
         {
             StringBuilder mailBody = new StringBuilder();
             mailBody.Append("<strong>Following ephone pairs have duplicate MAC addresses: </strong><br><br>"
@@ -97,9 +94,9 @@ namespace ephoneTables
 
                 mailBody.Append("<tr>");
 
-                mailBody.Append("<td><strong>" + duplicates[i].Item1.CME + "</strong></td><td>" + duplicates[i].Item1.EPHONE
-                    + "</td><td>" + duplicates[i].Item1.MAC + "</td><td><strong>" + duplicates[i].Item2.CME
-                    + "</strong></td><td>" + duplicates[i].Item2.EPHONE + "</td><td>" + duplicates[i].Item2.MAC + "</td>");
+                mailBody.Append("<td><strong>" + duplicates[i].Item1.Cme + "</strong></td><td>" + duplicates[i].Item1.Ephone
+                    + "</td><td>" + duplicates[i].Item1.Mac + "</td><td><strong>" + duplicates[i].Item2.Cme
+                    + "</strong></td><td>" + duplicates[i].Item2.Ephone + "</td><td>" + duplicates[i].Item2.Mac + "</td>");
 
                 mailBody.Append("</tr>");
             }

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint;
 
 namespace ephoneTables
 {
@@ -16,11 +11,11 @@ namespace ephoneTables
         /// <summary>
         /// deletes all list items in a Sharepoint list
         /// </summary>
-        public static void deleteAll()
+        public static void DeleteAll()
         {
-            string sharepointURL = "http://sharepoint.eot.int/kb/";
+            const string sharepointUrl = "http://sharepoint.eot.int/kb/";
 
-            using (ClientContext ccontext = new ClientContext(sharepointURL))
+            using (ClientContext ccontext = new ClientContext(sharepointUrl))
             {
                 Web web = ccontext.Web;
                 List routerConfigListOnSharepoint = web.Lists.GetByTitle("Klienci VOIP");
@@ -37,7 +32,7 @@ namespace ephoneTables
                 {
                     Console.WriteLine(ex.Message + Environment.NewLine + "Terminating program due to error occurence...");
                     System.Threading.Thread.Sleep(5000);
-                    System.Environment.Exit(0);
+                    Environment.Exit(0);
                 }
 
                 while (listItems.Count != 0)

@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ephoneTables.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SharePoint">
       <HintPath>..\Microsoft.SharePoint.dll</HintPath>
@@ -86,6 +89,7 @@
     <Compile Include="routerConfigToSharepoint.cs" />
     <Compile Include="RouterSectionItems.cs" />
     <Compile Include="SendMail.cs" />
+    <Compile Include="TerminateProgram.cs" />
     <Compile Include="TestForMacDuplicates.cs" />
   </ItemGroup>
   <ItemGroup>
