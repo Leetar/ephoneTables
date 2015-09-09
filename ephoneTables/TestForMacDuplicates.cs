@@ -4,34 +4,78 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
+using Microsoft.SharePoint.Client;
 
 namespace ephoneTables
 {
-    class TestForMacDuplicates
+    class TestForMacDuplicates : List<MacAndCME>
     {
-        private TestForMacDuplicates(List<EphoneTuple> pairedSections)
+        public List<Tuple<MacAndCME, MacAndCME>> TestForMacDuplicatesMethod()
         {
-            for (int i = 0; i < pairedSections.Count; i++)
-            {
-                for (int j = 0; j < pairedSections.Count; j++)
-                {
-                    if (pairedSections[i].Item1.Value.ContainsKey("mac-address") == 
-                        pairedSections[j].Item1.Value.ContainsKey("mac-address"))
-                    {
-                        MailMessage message = new MailMessage("sharepoint@eot.pl", "it.eot.pl"); // TEMPORARY
-                        SmtpClient mailClient = new SmtpClient();
-                        mailClient.Port = 25;
-                        mailClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                        mailClient.UseDefaultCredentials = false;
-                        mailClient.Host = "smtp.google.com"; //TEMPORARY
-                        message.Subject = "FOUND MAC MDDRESS DUPLICATE";
-                        message.Body = "mac adress for " +
-                            pairedSections[i].Item1.Key +
-                            " and " + pairedSections[j].Item1.Key + " the same!";
-                        mailClient.Send(message);
+            getlistItems();
+            //var duplicates = this.GroupBy(s => s.MAC);
+            List<Tuple<MacAndCME, MacAndCME>> duplicates = new List<Tuple<MacAndCME, MacAndCME>>();
 
-                        break;
+            foreach (MacAndCME element1 in this)
+            {
+                foreach (MacAndCME element2 in this)
+                {
+                    if (element1 == element2)
+                    {
+                        continue;
                     }
+
+                    if (element1.MAC.ToUpper() == element2.MAC.ToUpper())
+                    {
+
+                        if (duplicates.Count > 0)
+                        {
+                            if (duplicates.Last().Item2.EPHONE == element1.EPHONE)
+                                continue;
+                        }
+
+
+                        duplicates.Add(new Tuple<MacAndCME, MacAndCME>(element1, element2));
+                    }
+                }
+            }
+            return duplicates;
+        }
+
+        public void getlistItems()
+        {
+            string siteUrl = "http://sharepoint.eot.int/kb/";
+
+            using (ClientContext clientContext = new ClientContext(siteUrl))
+            {
+
+
+                List oList = clientContext.Web.Lists.GetByTitle("Klienci VOIP");
+
+                CamlQuery camlQuery = new CamlQuery();
+
+                camlQuery.ViewXml =
+                      "<View>"
+                    + "<ViewFields><FieldRef Name='CME' /><FieldRef Name='MAC' /><FieldRef Name='EPHONE' /></ViewFields>"
+                    + "</View>";
+
+                ListItemCollection collListItem = oList.GetItems(camlQuery);
+                clientContext.Load(collListItem,
+                    items => items.Include(
+                    item => item["CME"],
+                    item => item["MAC"],
+                    item => item["EPHONE"]));
+
+                clientContext.ExecuteQuery();
+
+                foreach (ListItem oListItem in collListItem)
+                {
+                    this.Add(new MacAndCME()
+                    {
+                        CME = oListItem["CME"].ToString(),
+                        MAC = oListItem["MAC"].ToString(),
+                        EPHONE = oListItem["EPHONE"].ToString()
+                    });
                 }
             }
         }

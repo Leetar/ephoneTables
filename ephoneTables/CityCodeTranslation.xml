@@ -1,11 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<!DOCTYPE citiesList [
-  <!ELEMENT name (#PCDATA)>
-  <!ELEMENT code (#PCDATA)>
-  <!ELEMENT city (name, code)>
-]>
-
 <citiesList>
 
   <city>

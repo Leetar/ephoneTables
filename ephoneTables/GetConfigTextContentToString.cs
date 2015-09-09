@@ -15,11 +15,13 @@ namespace ephoneTables
     {
         public static string ConfigContent(FTPFileModificationDate filename)
         {
-            WebClient client = new WebClient();
-            client.Credentials = new NetworkCredential("crawl", "qwerty123");
-            //StreamReader reader2 = new StreamReader(client.OpenRead(GlobVar.serverUri + filename.filename)); //tu bierze najnowszy plik
-            StreamReader reader2 = new StreamReader(client.OpenRead(GlobVar.serverUri + filename.filename));
-            return reader2.ReadToEnd();
+            using (WebClient client = new WebClient())
+            {
+                client.Credentials = new NetworkCredential("crawl", "qwerty123");
+                StreamReader reader2 = new StreamReader(client.OpenRead(GlobVar.serverUri + filename.filename));
+
+                return reader2.ReadToEnd();
+            }
         }
     }
 }

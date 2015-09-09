@@ -20,6 +20,18 @@ namespace ephoneTables
             stopWatch.Start();
             GlobVar.serverUri = "ftp://172.17.56.20/CISCO/";
 
+            DeleteOldSharepointRouterConfigTables.deleteAll();
+            AddToSharepoint.AddToSharepointTables();
+            SendMail mail = new SendMail();
+            mail.SendEmail();
+
+            
+
+            
+
+
+            //TestForMacDuplicates test = new TestForMacDuplicates();
+            //test.getlistItems();
 
             AddToSharepoint.AddToSharepointTables();
 
