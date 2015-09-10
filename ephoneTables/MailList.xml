@@ -2,9 +2,6 @@
 
 <MailAdresses>
 
-  <RecipientAddress>a.litarowicz@eot.pl</RecipientAddress>
-  <!--<RecipientAddress>l.sochanowski@eot.pl</RecipientAddress>
-  <RecipientAddress>k.pastuszka@eot.pl</RecipientAddress>
-  <RecipientAddress>j.bujalski@eot.pl</RecipientAddress>-->
+  <RecipientAddress>it@eot.pl</RecipientAddress>
 
 </MailAdresses>

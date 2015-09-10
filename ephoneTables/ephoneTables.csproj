@@ -62,6 +62,7 @@
     <Compile Include="AddToSharepoint.cs" />
     <Compile Include="ConnectToFTPgetReader.cs" />
     <Compile Include="DeleteOldSharepointRouterConfigTables.cs" />
+    <Compile Include="EphoneMain.cs" />
     <Compile Include="ephoneService.cs">
       <SubType>Component</SubType>
     </Compile>

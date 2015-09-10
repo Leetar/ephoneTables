@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.ServiceProcess;
 
 namespace ephoneTables
 {
@@ -8,26 +6,26 @@ namespace ephoneTables
     {
         public static void Main()
         {
-            //progam execution time
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-
+            //EphoneService service = new EphoneService();
+            //ServiceInstallerUI installer = new ServiceInstallerUI(service.ServiceName);
+            //installer.Start();
             GlobVar.ServerUri = "ftp://172.17.56.20/CISCO/";
 
-            DeleteOldSharepointRouterConfigTables.DeleteAll();
+#if (DEBUG)
 
-            AddToSharepoint.AddToSharepointTables();
-
-            SendMail mail = new SendMail();
-            mail.SendEmail();
+            EphoneMain epmain = new EphoneMain();
             
-            stopWatch.Stop();
-            TimeSpan ts = stopWatch.Elapsed;
+#else
+            
+            ServiceBase[] servicesToRun = new ServiceBase[]
+            {
+                new EphoneService()
+            };
 
-            Console.WriteLine("Iteration successful.");
-            Console.WriteLine("Iteration execution time: {0}", ts);
-
-
-        }        
+            ServiceBase.Run(servicesToRun);
+           
+#endif
+            
+        }
     }
 }
