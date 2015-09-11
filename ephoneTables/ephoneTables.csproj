@@ -70,9 +70,8 @@
       <DependentUpon>ephoneService.cs</DependentUpon>
     </Compile>
     <Compile Include="EphoneTuple.cs" />
+    <Compile Include="EventLogging.cs" />
     <Compile Include="FTPConnectFileGet.cs" />
-    <Compile Include="ftpPlik.cs" />
-    <Compile Include="ftpPliki.cs" />
     <Compile Include="GetCityNames.cs" />
     <Compile Include="GetConfigTextContentToString.cs" />
     <Compile Include="GlobVar.cs" />
@@ -90,7 +89,6 @@
     <Compile Include="routerConfigToSharepoint.cs" />
     <Compile Include="RouterSectionItems.cs" />
     <Compile Include="SendMail.cs" />
-    <Compile Include="TerminateProgram.cs" />
     <Compile Include="TestForMacDuplicates.cs" />
   </ItemGroup>
   <ItemGroup>

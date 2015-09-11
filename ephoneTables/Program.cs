@@ -13,7 +13,7 @@ namespace ephoneTables
 
 #if (DEBUG)
 
-            EphoneMain epmain = new EphoneMain();
+            new EphoneMain();
             
 #else
             

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using  System.Threading;
+using System.Threading;
 
 namespace ephoneTables
 {
@@ -27,10 +27,12 @@ namespace ephoneTables
 
                 while (true)
                 {
+                    EventLogging.LogEvent("Iteration " + iteration + " complete", false);
+
                     Console.WriteLine("beggining {0} iteration...", iteration);
                     FtpConnectFileGet dates = new FtpConnectFileGet(GlobVar.ServerUri); //w srodku jest Filename, ModificationDate i RouterName dla wszystkich routerów
                     iteration++;
-                    
+
                     if (lastModList.Count > 0)
                     {
                         if (lastModList.Count() < dates.Count)
@@ -39,6 +41,7 @@ namespace ephoneTables
                             AddToSharepoint.AddToSharepointTables();
                             SendMail mail = new SendMail();
                             mail.SendEmail();
+                            EventLogging.LogEvent("Deletion and reprint of router config information has been performed. Iteration " + iteration, false);
                         }
                         Thread.Sleep(600000);
                     }

@@ -11,14 +11,15 @@ namespace ephoneTables
         
         public EphoneService()
         {
-            
+
             InitializeComponent();
             
         }
 
         protected override void OnStart(string[] args)
         {
-            EphoneMain epmain = new EphoneMain();
+            base.OnStart(args);
+            new EphoneMain();
         }
 
         protected override void OnStop()

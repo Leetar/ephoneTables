@@ -18,7 +18,7 @@ namespace ephoneTables
 
             if (lines == null)
             {
-                TerminateProgram exit = new TerminateProgram("No router configs found!");
+                EventLogging.LogEvent("Reader has returned null", true);
             }
 
             foreach (string line in lines)
