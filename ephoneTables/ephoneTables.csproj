@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ephoneTables.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SharePoint">
@@ -43,7 +47,10 @@
       <HintPath>..\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,15 +60,54 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddToSharepoint.cs" />
+    <Compile Include="ConnectToFTPgetReader.cs" />
+    <Compile Include="DeleteOldSharepointRouterConfigTables.cs" />
+    <Compile Include="EphoneMain.cs" />
+    <Compile Include="ephoneService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ephoneService.Designer.cs">
+      <DependentUpon>ephoneService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EphoneTuple.cs" />
+    <Compile Include="EventLogging.cs" />
     <Compile Include="FTPConnectFileGet.cs" />
-    <Compile Include="ftpPlik.cs" />
-    <Compile Include="ftpPliki.cs" />
+    <Compile Include="GetCityNames.cs" />
+    <Compile Include="GetConfigTextContentToString.cs" />
     <Compile Include="GlobVar.cs" />
+    <Compile Include="FTPFileModificationDate.cs" />
+    <Compile Include="MacAndCME.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouterConfig.cs" />
+    <Compile Include="routerConfigToSharepoint.cs" />
+    <Compile Include="RouterSectionItems.cs" />
+    <Compile Include="SendMail.cs" />
+    <Compile Include="TestForMacDuplicates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CityCodeTranslation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MailList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

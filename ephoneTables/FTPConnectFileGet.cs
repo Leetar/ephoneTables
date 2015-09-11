@@ -1,31 +1,51 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.Threading;
 
 namespace ephoneTables
 {
-    class FTPConnectFileGet
+    public class FtpConnectFileGet : List<FtpFileModificationDate>
     {
-        public void getFile()
+        /// <summary>
+        /// Konstruktor tworzący listę zwierającą nazwy plików i daty ich ostatniej modyfikacji
+        /// </summary>
+        /// <param name="serverUri">Adres IP routera</param>
+        public FtpConnectFileGet(string serverUri)
         {
-            string serverUri = "ftp://172.17.56.20/CISCO/";
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
-            request.Method = WebRequestMethods.Ftp.ListDirectory;
-            request.Credentials = new NetworkCredential("crawl", "qwerty123");
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            ConnectToFtPgetReader getReader = new ConnectToFtPgetReader();
+            
+            string[] lines = getReader.GetReaderMet(serverUri).ReadToEnd().Split('\n');
 
-            Stream responseStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
+            if (lines == null)
+            {
+                EventLogging.LogEvent("Reader has returned null", true);
+            }
 
+            foreach (string line in lines)
+            {
+                if (line == "")
+                {
+                    break;
+                }
+
+                string filename = Regex.Replace(line, @"\t|\n|\r", "");
+                this.Add(new FtpFileModificationDate(serverUri, filename));
+            }
         }
-        FtpWebResponse responseDate { get; set; }
-        FtpWebRequest requestDate { get; set; }
+
+        public IEnumerable<FtpFileModificationDate> GetUniqueRoutersList()
+        {
+            List<FtpFileModificationDate> resultList = new List<FtpFileModificationDate>();
+
+            IEnumerable<string> routers = this.Select(x => x.RouterName).Distinct(); //routerName jest w FTPFileModificationdate i tam trzeba napisać kod który go wycina. Lol.
+            foreach (string uniqueRouterName in routers)
+            {
+                FtpFileModificationDate latestFile = this.Where(x => x.RouterName == uniqueRouterName).OrderByDescending(x => x.ModificationDate).First();
+                latestFile.DownloadConfigurationFile(GlobVar.ServerUri);
+                resultList.Add(latestFile);
+            }
+
+            return resultList;
+        }
     }
 }
