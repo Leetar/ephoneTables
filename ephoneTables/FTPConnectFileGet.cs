@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -12,25 +13,35 @@ namespace ephoneTables
         /// <param name="serverUri">Adres IP routera</param>
         public FtpConnectFileGet(string serverUri)
         {
-            ConnectToFtPgetReader getReader = new ConnectToFtPgetReader();
-            
-            string[] lines = getReader.GetReaderMet(serverUri).ReadToEnd().Split('\n');
-
-            if (lines == null)
+            try
             {
-                EventLogging.LogEvent("Reader has returned null", true);
-            }
+                ConnectToFtPgetReader getReader = new ConnectToFtPgetReader();
 
-            foreach (string line in lines)
-            {
-                if (line == "")
+                string[] lines = getReader.GetReaderMet(serverUri).ReadToEnd().Split('\n');
+
+                if (lines == null)
                 {
-                    break;
+                    EventLogging.LogEvent("Reader has returned null", true);
                 }
 
-                string filename = Regex.Replace(line, @"\t|\n|\r", "");
-                this.Add(new FtpFileModificationDate(serverUri, filename));
+                foreach (string line in lines)
+                {
+                    if (line == "")
+                    {
+                        break;
+                    }
+
+                    string filename = Regex.Replace(line, @"\t|\n|\r", "");
+                    this.Add(new FtpFileModificationDate(serverUri, filename));
+                }
             }
+            catch (Exception ex)
+            {
+                EventLogging.LogEvent(ex.ToString(), true);
+            }
+
+
+
         }
 
         public IEnumerable<FtpFileModificationDate> GetUniqueRoutersList()

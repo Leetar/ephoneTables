@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Net.Mail;
+using System.Reflection;
 using System.Xml;
 
 namespace ephoneTables
@@ -59,7 +61,10 @@ namespace ephoneTables
 
             try
             {
-                mailList.Load("MailList.xml");
+                var folderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var configPath = Path.Combine(folderPath, "MailList.xml");
+
+                mailList.Load(configPath);
 
                 for (int i = 0; i < mailList.GetElementsByTagName("RecipientAddress").Count; i++)
                 {
@@ -68,6 +73,7 @@ namespace ephoneTables
             }
             catch (XmlException ex)
             {
+                EventLogging.LogEvent(ex.ToString(), true);
                 Console.WriteLine(ex);
             }
         }

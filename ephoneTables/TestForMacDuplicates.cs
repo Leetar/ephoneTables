@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.SharePoint.Client;
@@ -46,7 +47,7 @@ namespace ephoneTables
             using (ClientContext clientContext = new ClientContext(siteUrl))
             {
 
-
+                clientContext.Credentials = new NetworkCredential("automat.voip", "Hujkutas123", "EOT");
                 List oList = clientContext.Web.Lists.GetByTitle("Klienci VOIP");
 
                 CamlQuery camlQuery = new CamlQuery
