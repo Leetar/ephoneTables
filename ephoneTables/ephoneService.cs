@@ -7,8 +7,8 @@ namespace ephoneTables
     {
 
          // na początku będzie puste
+        private EphoneMain main = null;
 
-        
         public EphoneService()
         {
 
@@ -18,14 +18,13 @@ namespace ephoneTables
 
         protected override void OnStart(string[] args)
         {
-            base.OnStart(args);
-            new EphoneMain();
+            main = new EphoneMain();
         }
 
         protected override void OnStop()
         {
-            EphoneMain epmain = new EphoneMain();
-            epmain.Abort();
+            EventLogging.LogEvent("Service Aborted", true);
+            main.Abort();
         }
     }
 }

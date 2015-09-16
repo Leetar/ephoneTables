@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using Microsoft.SharePoint.Client;
 
 namespace ephoneTables
@@ -11,6 +12,7 @@ namespace ephoneTables
 
             using (ClientContext ccontext = new ClientContext(sharepointUrl))
             {
+                ccontext.Credentials = new NetworkCredential("automat.voip", "Hujkutas123", "EOT");
                 Web web = ccontext.Web;
 
                 List itemList = web.Lists.GetByTitle("Klienci VOIP");

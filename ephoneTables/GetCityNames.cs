@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Xml;
 
 namespace ephoneTables
@@ -11,7 +13,10 @@ namespace ephoneTables
             XmlDocument xmlCitiesTranslationList = new XmlDocument();
             try
             {
-                xmlCitiesTranslationList.Load("CityCodeTranslation.xml");
+                var folderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var configPath = Path.Combine(folderPath, "CityCodeTranslation.xml");
+
+                xmlCitiesTranslationList.Load(configPath);
                 int elementsCount = xmlCitiesTranslationList.GetElementsByTagName("city").Count;
 
                 for (int i = 0; i < elementsCount; i++)

@@ -30,8 +30,6 @@ namespace ephoneTables
             else
             {
                 eventLog.WriteEvent(new EventInstance(8, 4, EventLogEntryType.Error), message);
-                EphoneMain abort = new EphoneMain();
-                abort.Abort();
             }
             eventLog.Close();
         }
